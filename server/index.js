@@ -8,21 +8,32 @@
 // myServer.listen(8000,() =>console.log("server started!"))
 
 
-const http=require('http')
-const fs=require('fs');
+const http = require('http');
+const fs = require('fs');
+const url = require('url');
 
-const myserver=http.createServer((req,res)=>{
-    const log=`${Date.now()}:${req.url} New request recive\n`
-    fs.appendFile("log.txt",log,(err,data)=>{
-        switch(req.url){
-            case'/':res.end("homepage")
-            break
-            case'/about':res.end("i m harsh")
-            break
+const myserver = http.createServer((req, res) => {
+    const log = `${Date.now()}:${req.url} New request received\n`;
+    const myUrl = url.parse(req.url, true);
+    console.log(myUrl);
+
+    fs.appendFile("log.txt", log, (err, data) => {
+        switch(myUrl.pathname) {
+            case '/':
+                res.end("homepage");
+                break;
+            case '/about':
+                const username = myUrl.query.myname;
+                res.end(`Hi, ${username} `);
+                break; // 💡 THIS BREAK STOPS THE FALL-THROUGH AND CRASH!
+            case '/search':
+                const search = myUrl.query.search_query;
+                res.end("here is your result for " + search);
+                break;
             default:
-                res.end("404 not found")
+                res.end("404 not found");
         }
-    })
-    
-})
-myserver.listen(8000,()=>console.log("started"))
+    });
+});
+
+myserver.listen(8000, () => console.log("started"));
