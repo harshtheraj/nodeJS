@@ -46,3 +46,11 @@
 1779970517247:/about?myname=nodeJS New request recive
 1779971118744:/about?myname=nodeJS New request received
 1779971118808:/favicon.ico New request received
+1779972145110:GET / New request received
+1779972145171:GET /favicon.ico New request received
+1779972498991:GET /singup New request received
+1779972642454:GET /singup New request received
+1779972665435:GET /singup New request received
+1779972888749:GET /singup New request received
+1779972993099:GET /singup New request received
+1779972993157:GET /favicon.ico New request received

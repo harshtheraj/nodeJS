@@ -8,28 +8,73 @@
 // myServer.listen(8000,() =>console.log("server started!"))
 
 
+// const http = require('http');
+// const fs = require('fs');
+// const url = require('url');
+
+// const myserver = http.createServer((req, res) => {
+//     const log = `${Date.now()}:${req.url} New request received\n`;
+//     const myUrl = url.parse(req.url, true);
+//     console.log(myUrl);
+
+//     fs.appendFile("log.txt", log, (err, data) => {
+//         switch(myUrl.pathname) {
+//             case '/':
+//                 res.end("homepage");
+//                 break;
+//             case '/about':
+//                 const username = myUrl.query.myname;
+//                 res.end(`Hi, ${username} `);
+//                 break; 
+//             case '/search':
+//                 const search = myUrl.query.search_query;
+//                 res.end("here is your result for " + search);
+//                 break;
+//             default:
+//                 res.end("404 not found");
+//         }
+//     });
+// });
+
+// myserver.listen(8000, () => console.log("started"));
+
+
+
+
+
+// ---------------------------- HTTP METHOD ---------------------------
+
+
 const http = require('http');
 const fs = require('fs');
 const url = require('url');
 
 const myserver = http.createServer((req, res) => {
-    const log = `${Date.now()}:${req.url} New request received\n`;
+    const log = `${Date.now()}:${req.method} ${req.url} New request received\n`;
     const myUrl = url.parse(req.url, true);
-    console.log(myUrl);
 
     fs.appendFile("log.txt", log, (err, data) => {
         switch(myUrl.pathname) {
             case '/':
-                res.end("homepage");
+                if(req.method==='GET') res.end('HomePage')
                 break;
             case '/about':
                 const username = myUrl.query.myname;
                 res.end(`Hi, ${username} `);
-                break; // 💡 THIS BREAK STOPS THE FALL-THROUGH AND CRASH!
+                break; 
             case '/search':
                 const search = myUrl.query.search_query;
                 res.end("here is your result for " + search);
                 break;
+            case'/singup':
+                if(req.method==='GET') {
+                    res.end('This is the SingUp Form')
+                }else if (req.method==='POST'){
+                    // DB query
+                    res.end("success")
+            }
+            break 
+            
             default:
                 res.end("404 not found");
         }
